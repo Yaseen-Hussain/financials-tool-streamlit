@@ -127,10 +127,10 @@ def process_files(uploaded_files):
     return pd.DataFrame(output_data)
 
 # ------------------- Streamlit UI -------------------
-st.title("📊 Financial Data Processor")
+st.title("📊 Probe Data Processor")
 
 uploaded_files = st.file_uploader(
-    "Upload multiple Excel (.xls) files",
+    "Upload multiple Financial Excel (.xls) files",
     type=["xls"],
     accept_multiple_files=True
 )
@@ -154,7 +154,7 @@ if uploaded_files:
     output.seek(0)
 
     st.download_button(
-        label="📥 Download Consolidated Excel",
+        label="📥 Download Processed Excel",
         data=output,
         file_name="financial_summary_output.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
