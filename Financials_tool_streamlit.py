@@ -130,7 +130,7 @@ def process_files(uploaded_files):
 st.title("📊 Probe Data Processor")
 
 uploaded_files = st.file_uploader(
-    "Upload multiple Financial Excel (.xls) files",
+    "Upload Multiple Financial Excel (.xls) Files",
     type=["xls"],
     accept_multiple_files=True
 )
