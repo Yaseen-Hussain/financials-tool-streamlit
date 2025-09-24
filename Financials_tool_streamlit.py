@@ -137,6 +137,15 @@ uploaded_files = st.file_uploader(
 
 if uploaded_files:
     df = process_files(uploaded_files)
+    df = df.sort_values(by="Net Revenue", ascending=False)
+    cols_to_round = [
+        "Gross Margin(%)", "EBITDA (%)", "Depreciation (% of sales)",
+        "Finance Cost (% of sales)", "PAT %", "TOL/TNW ", 
+        "Debt/EBITDA", "ROCE (%)", "ROE (%)", "Fixed Asset Turnover Ratio"
+    ]
+    for col in cols_to_round:
+        if col in df.columns:
+            df[col] = df[col].round(3)
     st.dataframe(df)
 
     # Save output to Excel in memory
