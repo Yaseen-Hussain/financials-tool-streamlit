@@ -127,16 +127,25 @@ def process_files(uploaded_files):
     return pd.DataFrame(output_data)
 
 # ------------------- Streamlit UI -------------------
-st.title("📊 Financial Data Processor")
+st.title("📊 Probe Data Processor")
 
 uploaded_files = st.file_uploader(
-    "Upload multiple Excel (.xls) files",
+    "Upload Multiple Financial Excel (.xls) Files",
     type=["xls"],
     accept_multiple_files=True
 )
 
 if uploaded_files:
     df = process_files(uploaded_files)
+    df = df.sort_values(by="Net Revenue", ascending=False)
+    cols_to_round = [
+        "Gross Margin(%)", "EBITDA (%)", "Depreciation (% of sales)",
+        "Finance Cost (% of sales)", "PAT %", "TOL/TNW ", 
+        "Debt/EBITDA", "ROCE (%)", "ROE (%)", "Fixed Asset Turnover Ratio"
+    ]
+    for col in cols_to_round:
+        if col in df.columns:
+            df[col] = df[col].round(3)
     st.dataframe(df)
 
     # Save output to Excel in memory
@@ -145,7 +154,7 @@ if uploaded_files:
     output.seek(0)
 
     st.download_button(
-        label="📥 Download Consolidated Excel",
+        label="📥 Download Processed Excel",
         data=output,
         file_name="financial_summary_output.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
